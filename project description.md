@@ -6,7 +6,7 @@ tags:
 
 ### Supervisor: Anestis Dalgkitsis, Cyril Hsu (a.dalgkitsis@uva.nl, s.h.hsu@uva.nl)
 
-This Thesis is focused on enhancing a Python-based [[SDN]] and [[NFV]] network simulator called VNFNet, originally developed to simulate Virtual Network Function (VNF) migration and orchestration for 5G networks.
+This Thesis is focused on enhancing a Python-based [[software defined networking]] and [[network function virtualization]] network simulator called VNFNet, originally developed to simulate Virtual Network Function (VNF) migration and orchestration for 5G networks.
 
 The primary objective involves extending the traffic generation and propagation modules of the simulator to support multiple patterns of traffic. Your contribution will empower researchers to harness the power of your traffic generation module for developing and evaluating solutions on large-scale simulated networks. The key objectives are to:
 
@@ -19,7 +19,7 @@ The primary objective involves extending the traffic generation and propagation 
 
 ---
 
-Github repo: [link](https://github.com/anestisdalgkitsis/vnfnet/tree/main).
+GitHub repo: [link](https://github.com/anestisdalgkitsis/vnfnet/tree/main).
 
 ---
 On a very high level, your project tasks should include:
@@ -40,6 +40,7 @@ On a very high level, your project tasks should include:
 - something with displaying the network
 - service graph request embedding
 - porting features from java application
+- traffic generation
 
 # Rust
 - identify 'hot code' trough a profiler
