@@ -13,27 +13,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Welcome.md",
+                "file": "log/07-04.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "9b141d2c898c8236",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "project plan.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
-      },
-      {
-        "id": "37e4174571449013",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "5dc1e64de0f540c8",
-            "type": "leaf",
-            "state": {
-              "type": "graph",
-              "state": {}
-            }
-          }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -99,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Welcome.md",
+                "file": "project plan.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -116,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Welcome.md",
+                "file": "project plan.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -139,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Welcome.md"
+                "file": "project plan.md"
               }
             }
           }
@@ -160,8 +159,21 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "7fa5a11fb3b0ebc6",
+  "active": "9b141d2c898c8236",
   "lastOpenFiles": [
+    "concepts/service chaining.md",
+    "project description.md",
+    "papers/NFV_state_of_the_art_challenges_and_implementation_in_next_generation_mobile_networks_vEPC.pdf",
+    "papers/Resource_Allocation_in_NFV_A_Comprehensive_Survey.pdf",
+    "log/10-04.md",
+    "log/08-04.md",
+    "log/07-04.md",
+    "log/02-04.md",
+    "log/2024-04-10.md",
+    "timeline.md",
+    "README.md",
+    "project plan.md",
+    "project.md",
     "Welcome.md"
   ]
 }
