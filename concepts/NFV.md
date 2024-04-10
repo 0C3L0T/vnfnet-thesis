@@ -1,1 +1,0 @@
-Network Function Virtualization, in simple terms, is a networking technique where network functionality(like routing, firewalls, load balancing etc) are moved from specialized hardware to commercial hardware trough virtualization.

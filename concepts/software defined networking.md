@@ -1,0 +1,1 @@
+SDN is an architecture that separates the [[control plane]] from the [[data plane]] in networking devices. It allows network administrators to centrally manage network behavior through software-based controllers, rather than relying on individual devices to make decisions.

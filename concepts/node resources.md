@@ -1,0 +1,1 @@
+Node resources are attributes that refer to servers and VNFs, such as CPU, memory, storage. The resources on the nodes may vary depending on the type of hosted functions. For instance, a memory server may have large storage resources, while a computationally intensive server may have abundant CPU resources.

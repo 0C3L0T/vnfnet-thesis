@@ -1,0 +1,1 @@
+Link resources are attributes that refer to substrate links and virtual links (VLs), such as bandwidth, delay, and packet loss.

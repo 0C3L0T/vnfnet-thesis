@@ -1,0 +1,1 @@
+NFV is a technology that virtualizes network functions that traditionally run on dedicated hardware appliances. These functions include tasks like routing, firewalling, intrusion detection, load balancing, etc. NFV aims to decouple network functions from proprietary hardware appliances, allowing them to run in software on standard servers or in the cloud.

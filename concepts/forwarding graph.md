@@ -1,0 +1,1 @@
+A forwarding graph is a representation of the network paths that data packets should follow to reach their destination. It defines the sequence of network functions (such as firewalls, intrusion detection systems, etc.) that packets should traverse.
