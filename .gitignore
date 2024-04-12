@@ -1,2 +1,4 @@
 *.js
 *.css
+workspace.json
+app.json
