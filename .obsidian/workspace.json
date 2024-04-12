@@ -8,49 +8,13 @@
         "type": "tabs",
         "children": [
           {
-            "id": "e42c42b6000565b0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "concepts/software defined networking.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "b91bfa2037076fd5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "questions.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "527216e5fe12d462",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "concepts/service function chaining.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "9700ad7cf0765682",
             "type": "leaf",
             "pinned": true,
             "state": {
               "type": "markdown",
               "state": {
-                "file": "project plan.md",
+                "file": "README.md",
                 "mode": "source",
                 "source": false
               },
@@ -58,28 +22,74 @@
             }
           },
           {
-            "id": "def906169310155a",
+            "id": "a2e9cafcd5c22583",
             "type": "leaf",
+            "pinned": true,
             "state": {
               "type": "pdf",
               "state": {
-                "file": "papers/survey_vnf_forwarding_graph.pdf"
+                "file": "papers/resource_allocation_in_vnf.pdf"
+              },
+              "pinned": true
+            }
+          },
+          {
+            "id": "62e6ec22a3078ba1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "log/11-04.md",
+                "mode": "source",
+                "source": false
               }
             }
           },
           {
-            "id": "138bc9b45fa39405",
+            "id": "c6e28a08d38990c6",
+            "type": "leaf",
+            "state": {
+              "type": "pdf",
+              "state": {
+                "file": "papers/solve_vne_problems.pdf"
+              }
+            }
+          },
+          {
+            "id": "7ccb6f6f28a4ac31",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "log/12-04.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "0ef469a3981c2853",
+            "type": "leaf",
+            "state": {
+              "type": "pdf",
+              "state": {
+                "file": "papers/Thesis_Tom_Wassing.pdf"
+              }
+            }
+          },
+          {
+            "id": "1ce0b099318cbc4a",
             "type": "leaf",
             "state": {
               "type": "diff-view",
               "state": {
-                "file": "project description.md",
+                "file": ".gitignore",
                 "staged": false
               }
             }
           }
         ],
-        "currentTab": 5
+        "currentTab": 6
       }
     ],
     "direction": "vertical"
@@ -210,37 +220,41 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "138bc9b45fa39405",
+  "active": "1ce0b099318cbc4a",
   "lastOpenFiles": [
-    "timeline.md",
-    "project plan.md",
-    "concepts/service function chaining.md",
+    "README.md",
+    "papers/On_the_optimal_allocation_of_virtual_resources_in_cloud_computing_networks.pdf",
+    "papers/Thesis_Tom_Wassing.pdf",
+    "papers/resource_allocation_in_vnf.pdf",
+    "log/12-04.md",
+    "papers/Service_Function_Chain_Embedding_for_NFV-Enabled_IoT_Based_on_Deep_Reinforcement_Learning.pdf",
+    "log/11-04.md",
+    "papers/solve_vne_problems.pdf",
+    "papers/VNE_complextity.pdf",
     "papers/survey_vnf_forwarding_graph.pdf",
+    "papers/NFV_state_of_the_art_challenges_and_implementation_in_next_generation_mobile_networks_vEPC.pdf",
+    "timeline.md",
+    "papers/resource allocation.md",
+    "concepts/service function chaining.md",
     "questions.md",
     "concepts/software defined networking.md",
+    "log/10-04.md",
+    "concepts/network function virtualization.md",
+    "concepts/node resources.md",
     "concepts/embedding.md",
+    "concepts/forwarding graph.md",
+    "concepts/link resources.md",
+    "concepts/substrate network.md",
     "project description.md",
     "concepts/service graph request embedding.md",
-    "concepts/substrate network.md",
     "concepts/virtual link.md",
     "concepts/service level agreement.md",
-    "concepts/node resources.md",
-    "concepts/network function virtualization.md",
-    "concepts/link resources.md",
-    "concepts/forwarding graph.md",
     "concepts/network function.md",
     "log/07-04.md",
     "papers/i.md",
-    "papers/Thesis_Tom_Wassing.pdf",
-    "papers/NFV_state_of_the_art_challenges_and_implementation_in_next_generation_mobile_networks_vEPC.pdf",
     "papers/1-s2.0-S1389128620313189-main.pdf",
-    "papers/Resource_Allocation_in_NFV_A_Comprehensive_Survey.pdf",
-    "log/10-04.md",
     "log/08-04.md",
     "log/02-04.md",
-    "log/2024-04-10.md",
-    "README.md",
-    "project.md",
-    "Welcome.md"
+    "log/2024-04-10.md"
   ]
 }
