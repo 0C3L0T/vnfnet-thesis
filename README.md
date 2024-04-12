@@ -16,22 +16,22 @@ Supervisors: Anestis Dalgkitsis, Cyril Hsu
 Recent developments in software defined networking have seen the move from traditional networking architectures, where network services such as firewalls, load balancers, intrusion detection systems, encryption/decryption, and content filtering are typically deployed as standalone appliances or devices, to virtualized network functions (VNF). These network functions can be run on enterprise-grade hardware instead of specialized, vendor-specific machines, thereby improving resource use and extensibility. Additionally, with the increasing complexity and dynamic nature of modern networks, there is a need for more flexible and scalable approaches to service delivery. Service Function Chaining (SFC) addresses this need by allowing the creation of logical chains of virtualized network services that are applied to traffic flows in a programmable and dynamic manner to allow for a high level of customization and complex functionality, further extending the trend of software-defined networking.
 
 ### Problem description !
-The challenges in this field of research consist of three stages: function chain composition (VNFs-CC), function chain embedding(VNF-FGE) and VNF scheduling(VNFs-SCH) whereby different VNFs get chained together according to a specific requirement, the chain gets embedded on the actual available service network topology, also called a substrate network (SN) and resources on this network get allocated to host the VNF function chain. [¹]
+The challenges in this field of research consist of three stages: VNF chain composition (VNFs-CC), VNF graph embedding(VNF-FGE) and VNF scheduling(VNFs-SCH) whereby different VNFs get chained together according to a specific requirement, the chain gets embedded on the actual available service network topology, also called a substrate network (SN) and resources on this network get allocated to host the VNF function chain [¹].
+VNF-FGE, in being a generalization of the virtual network embedding (VNE) problem, is NP-hard [²]. Therefore, multiple solution approaches have been proposed based on heuristic and meta heuristic, and more recently machine- and deep learning models [³], [⁴].
 
-- all problems are NP-complete (find source)
-
-When looking specifically at the embedding problem, multiple solutions have been proposed.
-- online/offline (find source)
-- exact / heuristic / meta heuristic (find source)
-- Machine Learning / Deep Learning (find source)
 
 
 
 [¹]: Resource_Allocation_in_NFV_A_Comprehensive_Survey,
+[²]: vne complexity
+[³]: solve vne problems
 
 
 ### Research question !
 The research question; describe the problem that will be worked on. This often takes the form of a reflection with regard to the “state-of-the-art” just described. As part of the research question, it is also described what the project will deliver: the product that will be delivered at the end, eg the results of a research, the source code of developed software, documentation.
+
+
+previous work has been done on VNF simulation, notably in the form of civi-sim [⁵]
 
 While many strategies have been proposed to tackle the embedding problem, there remains to be developed a simulation framework that allows for testing models. it needs to be easy to use, so developers can easily work with it, maybe even in the form of a library for easy integration. 
 
@@ -42,6 +42,8 @@ We will also check if there are areas that could benefit from a rework in a lowe
 work on a VNF resource allocation and SDN simulator called VNFnet, the project will integrate features from previous extension of CVI-sim[²],[³]. Here too, the focus will be put on evaluating machine-learning based solutions to the VNF-FGE problem.
 
 the project will be open source
+
+"How can we extend previous work on VNF simulators to more easily accommodate Machine Learning solutions to the VNF-FGE problem?"
 
 - cater to exact, heuristic or meta-heuristic solution frameworks?
 - extending VNFnet
@@ -61,16 +63,15 @@ the project will be open source
 - cloudsim
 - [networkx](https://networkx.org/documentation/latest/)
 
-
-
 ### Methods !
 Methods: how is the research conducted? Which subtasks can be distinguished? For example: extensive literature research, design and implementation of a program, design of an experiment.
 
 
-- talking with researchers -> tailoring to their needs
+- talking with researchers -> tailoring to their needs -> design interfaces for ML
 - refactoring existing codebase
 - extensible python framework
-- design interfaces for 
+- port previous iteration [²]
+- 
 
 ### Planning
 The schedule; Describe how the available time is expected to be spent. It is often difficult to identify all activities in advance, let alone to indicate accurately on the day what will be completed on which date. In general, it is possible to identify a number of phases (eg literature research, design,
