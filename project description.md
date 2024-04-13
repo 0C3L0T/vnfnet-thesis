@@ -47,3 +47,9 @@ On a very high level, your project tasks should include:
 - replace with optimized rust code
 - maybe even port the entire project
 - possibly create a library with [[PyO3]]
+
+---
+
+- Roughly speaking, the environment should be able to report its state to the implementation and apply the returned embedding policy on-the-fly.
+
+---
