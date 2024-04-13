@@ -12,7 +12,7 @@ Recent developments in software defined networking have seen the move from tradi
 
 ## Problem description
 The challenges in this field of research consist of three stages: VNF chain composition (VNFs-CC), VNF graph embedding(VNF-FGE) and VNF scheduling(VNFs-SCH) whereby different VNFs get chained together according to a specific requirement, the chain gets embedded on the actual available service network topology, also called a substrate network (SN) and resources on this network get allocated to host the VNF function chain [¹].
-VNF-FGE, in being a generalization of the virtual network embedding (VNE) problem, is NP-hard [²]. Therefore, multiple solution approaches have been proposed based on heuristic and meta heuristic, and more recently machine- and deep reinforcement learning models [³], [⁴].
+VNF-FGE, in being a generalization of the virtual network embedding (VNE) problem, is NP-hard [²]. Therefore, multiple solution approaches have been proposed based on heuristic and meta heuristic, and more recently machine- and deep reinforcement learning models ([³], [⁴]).
 
 [¹]: Resource_Allocation_in_NFV_A_Comprehensive_Survey,
 [²]: vne complexity
@@ -26,21 +26,26 @@ A Java-based simulator has been used in past literature to evaluate analytical s
 
 This project will deliver a completely open-source, well documented, highly-scalable and extendable simulation framework that can generate vast volumes of traffic to test VNF resource allocation on massive networks. Additionally, a small literature study will be performed to determine which traffic generation schemes will be implemented. Since most machine-learning frameworks and libraries are situated in the Python ecosystem, the simulator will be implemented in Python. To increase performance, a study will be performed into replacing parts of the simulator with optimized modules written in the more performant programming languages.
 
-- Roughly speaking, the environment should be able to report its state to the implementation and apply the returned embedding policy on-the-fly.
 
 [⁵]: Extending a simulation frame- work for virtualised networking infrastructures to leverage the potential of machine learning
 [⁶]: On the Optimal Allocation of Virtual Resources in Cloud Computing Networks
 
 ## Related work
 
-As mentioned previously, CVI-sim and machine learning extension. 
-- cvi sim
-- other network simulators simulators, how do they do it?
-- VNFnet -> this is the thing I'll be working on, also no literature [⁷]
-- mininet -> not scalable
+Some work has already been done on simulating Virtual Network Functions and their chaining and orchestration.
+
+The Alevin framework [⁷] uses a sophisticated application of visitor design pattern to decouple implementations from the objects they operate on, increasing modularity and allowing for an arbitrary amount of parameters. The concept of modularity is further explored in SFCsim[⁸], which is based on the NetworkX framework and splits up the simulation infrastructure in literal components. This approach of splitting up simulator functionality should be studied more closely, as it could provide valuable insight in the implementation of the current project.
+
+- message passing?
+
+In terms of ML-focused simulators, an extension of the CVI-sim testbed has been described in literature ([⁵], [⁸]). Recent work in multi-domain orchestration sees the creation of custom-made Open AI Gym environments, highlighting the need for ML-focused simulators ([⁹], [7]). 
+Mininet -> process virtualization, still uses actual resources, not scalable. focuses on network emulation.
+
 - cloudsim
 
 [⁷]: SCHE2MA: Scalable, Energy-Aware, Multidomain Orchestration for Beyond-5G URLLC Services
+[⁸]: SFC-sim
+[⁹]: openAI Gym
 
 ## Methods 
 This project will consist of four phases; design, implementation , optimization and evaluation.
