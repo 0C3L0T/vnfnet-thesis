@@ -50,6 +50,6 @@ On a very high level, your project tasks should include:
 
 ---
 
-- Roughly speaking, the environment should be able to report its state to the implementation and apply the returned embedding policy on-the-fly.
+- 
 
 ---
