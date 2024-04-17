@@ -7,7 +7,7 @@ the current simulator has a couple of classes:
 - Host -> hosts services, uses resources
 - User -> traffic pattern, has chain of VMs
 - Link -> source/destination and connection characteristics
-- VM -> has Host, also Service?
+- VM -> has Host, also Service? groups VNFs on host
 - Chain -> Has SLA and list of VMs
 - Domain -> collection of hosts and links
 - Connection -> path of nodes and User object, node path vs. chain?
@@ -25,21 +25,14 @@ I think this python file is supposed to be used as a library in other programs.
 ## What do we want to simulate?
 
 ### Substrate Network
-- nodes and edges
-	- nodes have resources in the form of cpu, storage, ram, etc
-	- edges have resources in the form of bandwidth, delay, etc
-
 - generate random / according to config -> would actually be useful to do this with networkX
-- provide interfaces for sending and receiving
-- handle resource allocation (nodes will have a predetermined amount of resources)
 
-### Substrate class:
+#### Substrate class:
 - ```nodes``` hash map of Node class
 - ```edges``` hash map of Edge class
 - ```create_topology()``` create substrate topology according to model or configuration
 - ```insert_function()```  update available resources of nodes and edges, or error if no resources are available
 - ```remove_function()``` update available resources of nodes and edges
-
 ##### Host class (node)
 - ```uid``` index in Substrate class hash table
 - ```cpu_avail``` available cpu resources according to topology
@@ -51,12 +44,10 @@ I think this python file is supposed to be used as a library in other programs.
 - ```latency``` latency of the connection according to topology
  
 ### Virtual Network Functions
-- ==does every SFC have its own VNFs or can they share== -> they would be able to share in theory but our simulation will have only one VNF per SFC.
-- ==will the remote agent be able to allocate/remove/migrate VNFs?==
-- model resources consumed per unit of traffic
+- in theory every VNF could be shared by multiple SFCs, but in this simulator it is not required.
 - ==find factors to simulate resource usage==
 
-### FunctionAllocator
+#### FunctionAllocator
 - ```functions``` hash map of ```NetworkfFunction``` classes
 - ```allocate_function()``` add function to ```Substrate``` class and insert into ```functions```
 - ```free_function()``` remove function from ```Substrate``` and ```functions```
@@ -69,36 +60,19 @@ I think this python file is supposed to be used as a library in other programs.
 - ```host_id``` on which function is hosted 
 
 ### Service Function Chains
-- latency -> every link between VNFs will add propagation and processing time
-- chain -> vector of nodes, ==I guess each node will have to have a forwarding table, so we know which edge will be taken==
-- source / destination
+- ==how do we know what edges are used in the chain?==
 - requested according to Poissant distribution (see paper)
- - removed based on lifetime
+ - 'service request'
+- static vs. mobile vs. dynamic?
 
 ### ChainAllocator
 - ```chains``` hash map of ```ServiceChain``` class
 - ```allocate_chain()```
-- ```calculate_latency()``` calculate the total latency of the chain
 
 #### ServiceChain
-- ```functions``` list of ```NetworkFunction``` classes
-- ```lifetime``` duration that the chain should be active
-
-
-
-
-### Traffic
-It seems to me that SFC and the concept of traffic are very much related.
-
-Network traffic has multiple aspects:
-1. source/destination
-2. SLA requirements
-
-- static vs. mobile vs. dynamic traffic?
-
-We can say that traffic is only generated along a SFC. Or maybe the creation of the SFC *is* the traffic, since resources have to be allocated.
-
-is the SLA static though? I can imagine that if a VNF is not using all of its allocated resources, the resources can be "multi-threaded".
+- ```functions``` list of ```NetworkFunction``` classes that make up the chain
+- ```lifetime``` duration that the chain should be active, after which it will be deallocated
+- ```calculate_latency()``` calculate the total latency of a chain
 
 ### Scheduler -> Environment?
 - handle orchestration
@@ -107,9 +81,12 @@ is the SLA static though? I can imagine that if a VNF is not using all of its al
 - ==so the job of the remote agent is not to allocate resources, but to optimize the service chains?==
 - or the network would have a list of service chains that are not yet embedded and the remote agent decides where to embed them
 - 'step' the simulation
-- generate Service Function Chain requests?
 - maybe do migration here, since VNFs and SFCs will need to be updated
 - generate 'unembedded' SFC requests
+
+#### Environment
+- 
+- ```step()``` decrease all lifetimes by 1
 
 ### How will users interact with it?
 - VNFnet seems to be used as a library, so we should maybe keep it a python library
