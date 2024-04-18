@@ -14,6 +14,11 @@ Network traffic has multiple aspects:
 2. SLA requirements
 
 
+- generate 'service request' according to [[Poisson distribution]] (see paper)
+
 We can say that traffic is only generated along a SFC. Or maybe the creation of the SFC *is* the traffic, since resources have to be allocated.
 
 is the SLA static though? I can imagine that if a VNF is not using all of its allocated resources, the resources can be "multi-threaded".
+
+
+ ==we need to generate a chain of VNFs, each with their resource requirements according to some model, which the remote agent has to efficiently embed.==
