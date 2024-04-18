@@ -29,21 +29,25 @@ I think this python file is supposed to be used as a library in other programs.
 ## Substrate
 - ```HashMap<Node> nodes```: hash map of ```Node``` class
 - ```HashMap<Edge> edges```: hash map of ```Edge``` class
-- ```insert_vm(target_node: host_id, virtual_machine: VM) -> Ok() | Err()```:  decrease resources of ```Node``` with ```host_id``` and update available resources of nodes and edges and return node_id, or error if no resources are available
-- ```remove_vm(target_node: Node, virtual_machine: VM) -> void```: update available resources of nodes and edges 
+- ```insert_vm(target_node: host_id, virtual_machine: VirtualMachine) -> Ok() | Err()```:  decrease available resources of ```Node``` with ```host_id```, or fail if no resources are available.
+- ```remove_vm(target_node: Node, virtual_machine: VirtualMachine) -> void```: increase available resources of ```Node``` with ```host_id```.
+- ```insert_vl(target_edge: edge_id, virtual_link: VirtualLink) -> Ok() | Err()```: decrease available resources of ```Edge``` with ```edge_id```, or fail if no resources are available.
+- ```remove_vl(target_edge: edge_id, virtual_link: VirtualLink) -> void```: increase available resources of ```Edge``` with ```edge_id```.
 ### Host class (node)
 - ```Int uid```: index in ```nodes```  hash table
-- ```cpu_avail``` available cpu resources according to topology
-- ```memory_avail``` available memory resources according to topology
-- ```storage_avail``` available storage according to topology
+- ```Float cpu_avail``` available CPU resources according to topology
+- ```Float memory_avail``` available memory resources according to topology
+- ```Float storage_avail``` available storage according to topology
 ### Link class (edge)
 - ```Int uid```: index in ```edges``` hash table
-- ```avail_bandwidth```: available bandwidth according to topology
+- ```Float avail_bandwidth```: available bandwidth according to topology
 - ```Float latency```: latency of the connection according to topology
+- ```Float transfer_rate```: percentage of traffic that gets successfully delivered
 
 ## Simulation
-- ```HashMap<VirtualMachine> virtual_machines```: hash map of ```VirtualMachine``` classes
-- ```HashMap<Chain> chains```: hash map of ```ServiceChain``` class
+- ```HashMap<VirtualMachine> virtual_machines```: hash map of ```VirtualMachine``` objects
+- ```HashMap<VirtualLink> virtual_links```: hash map of ```VirtualLink``` objects
+- ```HashMap<Chain> chains```: hash map of ```ServiceChain``` objects
 - ```allocate_function(target_vm: vm_id, function: NetworkFunction) -> function_id```: add ```function``` to ```functions``` of ```target_vm``` and return ```function_id``` or error if no resources available
 - ```free_function(target_vm: vm_id, function_id: uid) -> void```: remove function with ```function_id``` from ```functions``` of ```target_vm```
 - ```allocate_chain(chain: ServiceChain) -> Ok() | Err()```: allocate all the VNFs on all the VMs and add ```chain``` to ```chains``` or fail because of resource constraints
@@ -54,15 +58,21 @@ I think this python file is supposed to be used as a library in other programs.
 - ```cpu_base```: base cpu utilization of virtual machine
 - ```memory_base```: base memory utilization of virtual machine
 - ```storage_base```: base storage utilization of virtual machine
-- ```bandwidth_base```: base bandwidth utilization of virtual machine
+### VirtualLink
+- ```Int uid```: index in the ```virtual_links``` hash map
+- ```NetworkFunction source```: link source
+- ```NetworkFunction destination```: link destination
+- ```Float bandwidth```: bandwidth used by the link
+
 ### ServiceChain
-- ```List<functions>```: list of *unembedded*```NetworkFunction``` classes that make up the chain
+- ```List<NetworkFunction> functions```: list of *unembedded*```NetworkFunction``` classes that make up the chain
 - ```Int lifetime```: duration that the chain should be active, after which it will be deallocated
-- ```Float calculate_latency()```: calculate the total latency of a chain
+- ```calculate_latency() -> Float```: calculate the total latency of a chain
 #### NetworkFunction class
 - ```Int uid```: index in ```functions``` hash map
 - ```Int vm_id```: index of parent ```VirtualMachine``` in ```virtual_machines``` hash map
 - ```Int lifetime```: duration that VNF should be active, inherited from parent ```ServiceChain```
+- ```VirtualLink forward_path```: 
 - ```cpu_usage```: function of traffic
 - ```memory_usage```: function of traffic
 - ```storage_usage```: function of traffic
@@ -75,10 +85,12 @@ I think this python file is supposed to be used as a library in other programs.
 - ```get_current_state()```: return representation of the current state of the ```network``` and  ```simulation```
 - ```reset()```: reset simulation and return reset state
 - ```step()```: decrease the ```lifetime``` attribute of all ```ServiceChain``` objects
-- ```embed_sfc(chain: ServiceChain) -> Ok() | Err()```: embed a ```ServiceChain``` object on the network , or fail because of resource constrictions.
-- ```create_vm()```: create a new  ```VirtualMachine``` object on the substrate network and allocate resources. Add to the ```virtual_machines``` list of the ```Simulation``` object.
-- ```remove_vm()```: remove a ```VirtualMachine``` object from the ```Simulation``` object and free the resources on the substrate network. This deletes all hosted functions.
+- ```embed_sfc(chain: ServiceChain) -> Ok() | Err()```: embed a ```ServiceChain``` object on the network, or fail because of resource constrictions.
+- ```create_vm() -> VirtualMachine```: create a new  ```VirtualMachine``` object on the substrate network and allocate resources. Add to the ```virtual_machines``` list of the ```Simulation``` object.
+- ```delete_vm(target_vm: vm_id) -> void```: remove a ```VirtualMachine``` object from the ```Simulation``` object and free the resources on the substrate network. This deletes all hosted functions.
 - ```migrate_vm(source_vm: vm_id, target_vm: vm_id) -> Ok() | Err()```: migrate the functions of one VirtualMachine object to another, or fail because of resource constrictions.
+- ```create_vl() -> VirtualLink```: create a new ```VirtualLink``` object on the substrate network, or fail because of resource constrictions.
+- ```delete_vl(target_vl: vl_id) -> void```: remove a ```VirtualLink``` object from the ```Simulation``` object and free the resources on the substrate network.
 
 - ```generate_service_request() -> ServiceChain```: generate a random unembedded chain of unembedded VNFs, see [[what is traffic generation]].
 	- specify length of chain
@@ -88,6 +100,7 @@ I think this python file is supposed to be used as a library in other programs.
 
 ## Monitor
 - stores and visualizes current Environment state?
+- coordinates can be generated based on link latency
 
 ## RemoteAgentInterface
 - asynchronous messaging between remote agent and Environment
