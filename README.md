@@ -20,11 +20,11 @@ I think this python file is supposed to be used as a library in other programs.
 - visualize the network -> grave?
 - optionally support VNFs being shared by multiple SFCs
 - ==find factors to simulate resource usage==
-- ==how do we know what edges are used in the chain?== -> virtual link
 - static vs. mobile vs. dynamic?
 - use networkX to generate substrate network
 - ==do we want to support penalties for over-utilization of resources?==
 - ==how do we combine synchronous time steps with asynchronous message passing?==
+	- let the remote agent do as many sfc generations/embeddings as it wants in between time steps
 
 ## Substrate
 - ```HashMap<Node> nodes```: hash map of ```Node``` class
@@ -63,16 +63,15 @@ I think this python file is supposed to be used as a library in other programs.
 - ```NetworkFunction source```: link source
 - ```NetworkFunction destination```: link destination
 - ```Float bandwidth```: bandwidth used by the link
-
 ### ServiceChain
 - ```List<NetworkFunction> functions```: list of *unembedded*```NetworkFunction``` classes that make up the chain
 - ```Int lifetime```: duration that the chain should be active, after which it will be deallocated
 - ```calculate_latency() -> Float```: calculate the total latency of a chain
-#### NetworkFunction class
+#### NetworkFunction
 - ```Int uid```: index in ```functions``` hash map
 - ```Int vm_id```: index of parent ```VirtualMachine``` in ```virtual_machines``` hash map
 - ```Int lifetime```: duration that VNF should be active, inherited from parent ```ServiceChain```
-- ```VirtualLink forward_path```: 
+- ```VirtualLink forward_path```: link to next ```NetworkFunction``` in ```ServiceChain```
 - ```cpu_usage```: function of traffic
 - ```memory_usage```: function of traffic
 - ```storage_usage```: function of traffic
@@ -102,9 +101,6 @@ I think this python file is supposed to be used as a library in other programs.
 - stores and visualizes current Environment state?
 - coordinates can be generated based on link latency
 
-## RemoteAgentInterface
-- asynchronous messaging between remote agent and Environment
-
 # Dependency Graph
 [mermaid tutorial](https://mermaid.js.org/intro/)
 ```mermaid
@@ -120,11 +116,9 @@ start --> stop
 
 Illustration in SFCsim paper: ![[Pasted image 20240413001256.png]]
 SFCsim schefuling: ![[Pasted image 20240416133522.png]]
-from Tom Wassings paper: ![[Pasted image 20240416115237.png]]
 
-![[Pasted image 20240417114519.png]]
 
 # 3. How to do service graph embedding
 - place VNF from SFC on SN randomly?
 
-4. propose network traffic generation strategy
+# 4. propose network traffic generation strategy

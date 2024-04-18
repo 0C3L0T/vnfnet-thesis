@@ -13,6 +13,9 @@ Network traffic has multiple aspects:
 1. source/destination
 2. SLA requirements
 
+==how long is a normal function chain?==
+==how many resources does a normal VNF consume?==
+
 
 - generate 'service request' according to [[Poisson distribution]] (see paper)
 
