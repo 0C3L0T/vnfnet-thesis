@@ -90,10 +90,6 @@ I think this python file is supposed to be used as a library in other programs.
 - ```delete_vl(target_vl: vl_id) -> void```: remove a ```VirtualLink``` object from the ```Simulation``` object and free the resources on the substrate network.
 
 - ```generate_service_request() -> ServiceChain```: generate a random unembedded chain of unembedded VNFs, see [[what is traffic generation]].
-	- specify length of chain
-	- specify characteristics of VNFs
-	- specify lifetime
-	- specify max latency
 
 ## Monitor
 - stores and visualizes current Environment state?
@@ -124,6 +120,8 @@ Environment --> ServiceChain
 Environment --> VirtualMachine
 Environment --> VirtualLink
 
+RemoteAgent --> Environment
+Monitor --> Environment
 ```
 
 ## How should it work?

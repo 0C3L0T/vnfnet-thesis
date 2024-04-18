@@ -1,27 +1,11 @@
-what does traffic generation mean in the context of Virtual network functions? just generate a bunch of random functions and chains and then let it run?
+Traffic generation, in the context of VNFnet, consists of generating 'service requests'. Service requests are [[service function chaining | SFCs]] consisting of unembedded [[virtual network functions | VNFs]]. It is up to the remote agent to receive these service requests, together with a state of the current simulation, and come up with an embedding strategy.
 
-- do we also need to generate network topology?
+A service request would consist of a couple things:
+- a chain of network functions of a variable length, each function having its own resource characteristics
+- a lifetime of how long the chain should be active
+- a service level agreement in the form of a max latency
 
-After taking a look at vnfnet, it looks like traffic generation means being able to query a service or user and get their current traffic characteristics. I could take a look if there are papers on this topic. Maybe something like "simulating network usage".
-	Also, different nodes would probably have different network traffic characteristics.
-
-
-### Traffic
-It seems to me that SFC and the concept of traffic are very much related.
-
-Network traffic has multiple aspects:
-1. source/destination
-2. SLA requirements
+The frequency of the traffic would be simulated according to a [[Poisson distribution]] (see paper)
 
 ==how long is a normal function chain?==
 ==how many resources does a normal VNF consume?==
-
-
-- generate 'service request' according to [[Poisson distribution]] (see paper)
-
-We can say that traffic is only generated along a SFC. Or maybe the creation of the SFC *is* the traffic, since resources have to be allocated.
-
-is the SLA static though? I can imagine that if a VNF is not using all of its allocated resources, the resources can be "multi-threaded".
-
-
- ==we need to generate a chain of VNFs, each with their resource requirements according to some model, which the remote agent has to efficiently embed.==
