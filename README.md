@@ -17,18 +17,16 @@ I think this python file is supposed to be used as a library in other programs.
 
 
 # 2. How should VNFnet work after the project?
-- visualize the network -> grave?
 - optionally support VNFs being shared by multiple SFCs
 - ==find factors to simulate resource usage==
 - static vs. mobile vs. dynamic?
-- use networkX to generate substrate network
 - ==do we want to support penalties for over-utilization of resources?==
 - ==how do we combine synchronous time steps with asynchronous message passing?==
 	- let the remote agent do as many sfc generations/embeddings as it wants in between time steps
 
 ## Substrate
-- ```HashMap<Node> nodes```: hash map of ```Node``` class
-- ```HashMap<Edge> edges```: hash map of ```Edge``` class
+- ```HashMap<Node> nodes```
+- ```HashMap<Edge> edges```
 - ```insert_vm(target_node: host_id, virtual_machine: VirtualMachine) -> Ok() | Err()```:  decrease available resources of ```Node``` with ```host_id```, or fail if no resources are available.
 - ```remove_vm(target_node: Node, virtual_machine: VirtualMachine) -> void```: increase available resources of ```Node``` with ```host_id```.
 - ```insert_vl(target_edge: edge_id, virtual_link: VirtualLink) -> Ok() | Err()```: decrease available resources of ```Edge``` with ```edge_id```, or fail if no resources are available.
@@ -45,16 +43,16 @@ I think this python file is supposed to be used as a library in other programs.
 - ```Float transfer_rate```: percentage of traffic that gets successfully delivered
 
 ## Simulation
-- ```HashMap<VirtualMachine> virtual_machines```: hash map of ```VirtualMachine``` objects
-- ```HashMap<VirtualLink> virtual_links```: hash map of ```VirtualLink``` objects
-- ```HashMap<Chain> chains```: hash map of ```ServiceChain``` objects
+- ```HashMap<VirtualMachine> virtual_machines```
+- ```HashMap<VirtualLink> virtual_links```
+- ```HashMap<ServiceChain> chains```
 - ```allocate_function(target_vm: vm_id, function: NetworkFunction) -> function_id```: add ```function``` to ```functions``` of ```target_vm``` and return ```function_id``` or error if no resources available
 - ```free_function(target_vm: vm_id, function_id: uid) -> void```: remove function with ```function_id``` from ```functions``` of ```target_vm```
 - ```allocate_chain(chain: ServiceChain) -> Ok() | Err()```: allocate all the VNFs on all the VMs and add ```chain``` to ```chains``` or fail because of resource constraints
 ### VirtualMachine
 - ```Int uid```: index in ```virtual_machines``` hash map
 - ```Int host_id```: index of ```Host``` in ```Substrate``` hash map
-- ```HashMap<NetworkFunction> functions```: hash map of managed ```NetworkFunction``` objects
+- ```HashMap<NetworkFunction> functions```
 - ```cpu_base```: base cpu utilization of virtual machine
 - ```memory_base```: base memory utilization of virtual machine
 - ```storage_base```: base storage utilization of virtual machine
@@ -70,8 +68,8 @@ I think this python file is supposed to be used as a library in other programs.
 #### NetworkFunction
 - ```Int uid```: index in ```functions``` hash map
 - ```Int vm_id```: index of parent ```VirtualMachine``` in ```virtual_machines``` hash map
+- ```Int vl_id```: index of ```VirtualLink``` in ```virtual_links``` hash map
 - ```Int lifetime```: duration that VNF should be active, inherited from parent ```ServiceChain```
-- ```VirtualLink forward_path```: link to next ```NetworkFunction``` in ```ServiceChain```
 - ```cpu_usage```: function of traffic
 - ```memory_usage```: function of traffic
 - ```storage_usage```: function of traffic
@@ -100,19 +98,39 @@ I think this python file is supposed to be used as a library in other programs.
 ## Monitor
 - stores and visualizes current Environment state?
 - coordinates can be generated based on link latency
+- visualize the network -> grave?
 
 # Dependency Graph
 [mermaid tutorial](https://mermaid.js.org/intro/)
 ```mermaid
 flowchart
-start --> stop
+Substrate --> Node
+Substrate --> Edge
+Substrate --> VirtualMachine
+Substrate --> VirtualLink
+
+Simulation --> VirtualMachine
+Simulation --> VirtualLink
+Simulation --> NetworkFunction
+Simulation --> ServiceChain
+
+VirtualMachine --> NetworkFunction
+VirtualLink --> NetworkFunction
+ServiceChain --> NetworkFunction
+
+Environment --> Substrate
+Environment --> Simulation
+Environment --> ServiceChain
+Environment --> VirtualMachine
+Environment --> VirtualLink
+
 ```
 
 ## How should it work?
 - VNFnet seems to be used as a library, so we should maybe keep it a python library
 - Cyril wrote "Roughly speaking, the environment should be able to report its state to the implementation and apply the returned embedding policy on-the-fly".
 - by making the modules communicate in the form of protobufs, we make the framework easily extendable
-- scheduling -> we could do discrete time, but real networks don't do that.
+- use networkX to generate substrate network
 
 Illustration in SFCsim paper: ![[Pasted image 20240413001256.png]]
 SFCsim schefuling: ![[Pasted image 20240416133522.png]]
@@ -120,5 +138,7 @@ SFCsim schefuling: ![[Pasted image 20240416133522.png]]
 
 # 3. How to do service graph embedding
 - place VNF from SFC on SN randomly?
+
+>Cyril:  "agent will propose (predict) an embedding assignment and the env will decide if the assignment is valid, if yes then execute (accept) otherwise reject."
 
 # 4. propose network traffic generation strategy
