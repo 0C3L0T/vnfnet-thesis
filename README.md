@@ -17,15 +17,14 @@ I think this python file is supposed to be used as a library in other programs.
 
 
 # 2. How should VNFnet work after the project?
-- simplify substrate network and add abstractions
-- generate traffic
-- report environment state and update according to commands -> ==formulate commands==
 - visualize the network -> grave?
 - optionally support VNFs being shared by multiple SFCs
 - ==find factors to simulate resource usage==
-- ==how do we know what edges are used in the chain?==
+- ==how do we know what edges are used in the chain?== -> virtual link
 - static vs. mobile vs. dynamic?
 - use networkX to generate substrate network
+- ==do we want to support penalties for over-utilization of resources?==
+- ==how do we combine synchronous time steps with asynchronous message passing?==
 
 ## Substrate
 - ```HashMap<Node> nodes```: hash map of ```Node``` class
@@ -70,24 +69,22 @@ I think this python file is supposed to be used as a library in other programs.
 - ```Float processing_time```: time it takes to process request
 
 ## Environment
-- combination of ```Substrate``` and ```Simulation```
-- ==do we want to support penalties for over-utilization of resources?==
-- generate requests of the form: (ServiceChain, Environment) -> use information on from ```Substrate``` and ```Simulation```
-- ==how do we combine synchronous time steps with asynchronous message passing?==
-
-#### Environment
 - ```network```: ```Substrate``` object
 - ```simulation```: ```Simulation``` object
 - ```create_topology()```: create and return a representation of a ```network``` and ```simulation```: class with topology according to model or configuration
 - ```get_current_state()```: return representation of the current state of the ```network``` and  ```simulation```
 - ```reset()```: reset simulation and return reset state
 - ```step()```: decrease the ```lifetime``` attribute of all ```ServiceChain``` objects
-- ```embed_sfc(chain: ServiceChain)```: embed a ```ServiceChain``` object on the network 
-- ```create_vm()```:
-- ```remove_vm()```:
-- ```migrate_vm()```:
+- ```embed_sfc(chain: ServiceChain) -> Ok() | Err()```: embed a ```ServiceChain``` object on the network , or fail because of resource constrictions.
+- ```create_vm()```: create a new  ```VirtualMachine``` object on the substrate network and allocate resources. Add to the ```virtual_machines``` list of the ```Simulation``` object.
+- ```remove_vm()```: remove a ```VirtualMachine``` object from the ```Simulation``` object and free the resources on the substrate network. This deletes all hosted functions.
+- ```migrate_vm(source_vm: vm_id, target_vm: vm_id) -> Ok() | Err()```: migrate the functions of one VirtualMachine object to another, or fail because of resource constrictions.
 
 - ```generate_service_request() -> ServiceChain```: generate a random unembedded chain of unembedded VNFs, see [[what is traffic generation]].
+	- specify length of chain
+	- specify characteristics of VNFs
+	- specify lifetime
+	- specify max latency
 
 ## Monitor
 - stores and visualizes current Environment state?
