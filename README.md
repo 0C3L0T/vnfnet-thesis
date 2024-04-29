@@ -28,15 +28,25 @@ I think this python file is supposed to be used as a library in other programs.
 An enum containing (PCI-e) devices. This could be extended to also include resource allocation on these devices.
 ### Host (node)
 - ```Int uid```: index in ```nodes```  hash table
-- ```[Device] devices_avail``` list of available devices on the host
 - ```Float cpu_avail``` available CPU resources according to topology
 - ```Float memory_avail``` available memory resources according to topology
 - ```Float storage_avail``` available storage according to topology
+
+- ```allocate_resources()``` allocate resources on host
+- ```free_resources()``` free resources on host
+
+**Possible:**
+- ```[Device] devices_avail``` list of available devices on the host
+
 ### Link (edge)
 - ```Int uid```: index in ```edges``` hash table
 - ```Float bandwidth_avail```: available bandwidth according to topology
 - ```Float latency```: latency of the connection according to topology
 - ```Float transfer_rate```: percentage of traffic that gets successfully delivered
+
+- ```allocate_resources()``` allocate resources on link
+- ```free_resources()``` free resources on link
+
 ### NetworkFunction
 - ```Int uid```: index in ```functions``` hash map
 - ```Int vm_id```: index of parent ```VirtualMachine``` in ```virtual_machines``` hash map
@@ -64,18 +74,23 @@ contains the state of the simulated substrate network
 - ```HashMap<Node> nodes```
 - ```HashMap<Edge> edges```
 
-- ```insert_vm(target_node: host_id, virtual_machine: VirtualMachine) -> Ok() | Err()```:  decrease available resources of ```Node``` with ```host_id```, or fail if no resources are available.
-- ```remove_vm(target_node: Node, virtual_machine: VirtualMachine) -> void```: increase available resources of ```Node``` with ```host_id```.
-- ```insert_vl(target_edge: edge_id, virtual_link: VirtualLink) -> Ok() | Err()```: decrease available resources of ```Edge``` with ```edge_id```, or fail if no resources are available.
-- ```remove_vl(target_edge: edge_id, virtual_link: VirtualLink) -> void```: increase available resources of ```Edge``` with ```edge_id```.
+- ```add_host() -> uid```: add a host object to the substrate and return host id
+- ```add_link() -> uid```: add a link object to the substrate and return link id
+
+- ```insert_virtual_machine(target_node: host_id, virtual_machine: VirtualMachine) -> Ok() | Err()```:  decrease available resources of ```Node``` with ```host_id```, or fail if no resources are available.
+- ```remove_virtual_machine(target_node: Node, virtual_machine: VirtualMachine) -> void```: increase available resources of ```Node``` with ```host_id```.
+
+- ```insert_virtual_link(target_edge: edge_id, virtual_link: VirtualLink) -> Ok() | Err()```: decrease available resources of ```Edge``` with ```edge_id```, or fail if no resources are available.
+- ```remove_virtual_link(target_edge: edge_id, virtual_link: VirtualLink) -> void```: increase available resources of ```Edge``` with ```edge_id```.
 
 	**ideas**
 	- as the network gets bigger, keeping the nodes and edges in memory will cause significant slowdown. We could implement a database to keep track of more data, possibly even in a distributed way.
 	- we can use this state to visualize the network in a possible GUI
+		- graphX
+		- custom webpage
 
 ### ServiceChain
 - ```List<NetworkFunction> functions```: list of *unembedded*```NetworkFunction``` classes that make up the chain
-- ```Int lifetime```: duration that the chain should be active, after which it will be de-allocated
 - ```calculate_latency() -> Float```: calculate the total latency of a chain
 
 # Simulation
@@ -95,14 +110,17 @@ Generates service requests in the form of ```ServiceChain``` objects. These serv
 1. Push - We open a pub/sub pipe and send requests in 'real-time' according to the distribution.
 2. Pull - We expose a function that, when called, returns an amount of service requests according to the distribution
 
-	**Ideas**
-	- I guess this class doesn't even need to know about the current state of the substrate network.
+```random_network_function() -> NetworkFunction```:  create a random network function, maybe according to some template
+```random_service_chain() -> ServiceChain```: generate random service chain, maybe according to some template
+
+
+**Ideas**
+- I guess this class doesn't even need to know about the current state of the substrate network.
 
 # Environment
 This will be the class that the remote agent interacts with, it combines the state of the network trough the ```Simulation``` class and generates service requests trough the ```Traffic generator``` object. It should be very simple, since Anestis will add functionality later on.
 
 It should have a pub/sub interface to relay the generated service requests from the ```TrafficGenerator``` object.
-
 
 
 ### Ideas
@@ -113,25 +131,25 @@ It should have a pub/sub interface to relay the generated service requests from 
 [mermaid tutorial](https://mermaid.js.org/intro/)
 ```mermaid
 flowchart
-Substrate --> Node
-Substrate --> Edge
-Substrate --> VirtualMachine
-Substrate --> VirtualLink
+
+Environment --> Simulation
+Environment --> Traffic
+
+Simulation --> ServiceChain
+Simulation --> NetworkFunction
+Traffic --> ServiceChain
+Traffic --> NetworkFunction
+
+ServiceChain --> NetworkFunction
 
 Simulation --> VirtualMachine
 Simulation --> VirtualLink
-Simulation --> NetworkFunction
-Simulation --> ServiceChain
+Simulation --> Substrate
 
-VirtualMachine --> NetworkFunction
-VirtualLink --> NetworkFunction
-ServiceChain --> NetworkFunction
-
-Environment --> Substrate
-Environment --> Simulation
-Environment --> ServiceChain
-Environment --> VirtualMachine
-Environment --> VirtualLink
+Substrate --> Host
+Substrate --> Link
+Substrate --> VirtualMachine
+Substrate --> VirtualLink
 
 RemoteAgent --> Environment
 Monitor --> Environment
